@@ -3,7 +3,8 @@ import { MainLayout } from './components/layout/MainLayout'
 import { FinanceProvider } from './contexts/FinanceContext'
 import { ROUTES } from './constants'
 
-import { SummaryCards, DashboardHeader, ExpensesByCategoryCarousel, FinancialFlowChart, CreditCardsWidget } from './components/dashboard'
+import { SummaryCards, DashboardHeader, ExpensesByCategoryCarousel, FinancialFlowChart } from './components/dashboard'
+import { CreditCardsWidget } from './components/dashboard/CreditCardsWidget'
 
 // Placeholder components - serão implementados nos próximos prompts
 const Dashboard = () => (
@@ -23,10 +24,51 @@ const Dashboard = () => (
     }}
   >
     <DashboardHeader />
-    <SummaryCards />
-    <ExpensesByCategoryCarousel />
-    <FinancialFlowChart />
-    <CreditCardsWidget />
+    
+    {/* Top Row - Expense Breakdown */}
+    <div className="w-full">
+      <ExpensesByCategoryCarousel />
+    </div>
+
+    {/* Bottom Section - Summary Cards (left) + Credit Cards Widget (right) */}
+    <div
+      className="w-full"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '32px',
+      }}
+    >
+      {/* Desktop: lado a lado, Mobile: empilhado */}
+      <div
+        className="w-full flex flex-col lg:flex-row gap-8"
+        style={{
+          alignItems: 'flex-start',
+        }}
+      >
+        {/* Left Column - Summary Cards */}
+        <div
+          className="w-full lg:flex-1"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+          }}
+        >
+          <SummaryCards />
+        </div>
+
+        {/* Right Column - Credit Cards Widget */}
+        <div className="w-full lg:flex-1">
+          <CreditCardsWidget />
+        </div>
+      </div>
+
+      {/* Financial Flow Chart - abaixo */}
+      <div className="w-full">
+        <FinancialFlowChart />
+      </div>
+    </div>
   </div>
 )
 const Transactions = () => <div>Transações - Em construção</div>

@@ -47,37 +47,37 @@ export function IncomeCard() {
 
   return (
     <div
-      className="rounded-2xl"
       style={{
         display: 'flex',
-        alignItems: 'center',
-        gap: '12px',
+        padding: '32px',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: '10px',
         flex: '1 0 0',
         alignSelf: 'stretch',
         borderRadius: '16px',
-        background: '#FEFEFE',
-        padding: '32px',
+        background: 'var(--color-neutral-0, #FEFEFE)',
       }}
     >
       {/* Ícone */}
-      <div className="flex-shrink-0 text-neutral-1000">
+      <div className="text-neutral-1000">
         <ArrowDownIcon />
       </div>
 
       {/* Conteúdo */}
-      <div className="flex flex-col flex-1 min-w-0">
+      <div className="flex flex-col w-full">
         {/* Título */}
-        <p className="text-neutral-1000 mb-2" style={{ fontSize: '14px', lineHeight: '20px', fontWeight: 400 }}>
+        <p className="text-neutral-500" style={{ fontSize: '14px', lineHeight: '20px', fontWeight: 400 }}>
           Receitas
         </p>
 
         {/* Valor */}
-        <p className="text-neutral-1000 mb-2" style={{ fontSize: '32px', lineHeight: '40px', fontWeight: 700 }}>
+        <p className="text-neutral-1000" style={{ fontSize: '32px', lineHeight: '40px', fontWeight: 700 }}>
           {formatCurrency(displayValue)}
         </p>
 
         {/* Vencimento */}
-        <p className="text-neutral-600" style={{ fontSize: '12px', lineHeight: '16px', fontWeight: 400 }}>
+        <p className="text-neutral-500" style={{ fontSize: '12px', lineHeight: '16px', fontWeight: 400 }}>
           Vence dia {dueDay}
         </p>
       </div>

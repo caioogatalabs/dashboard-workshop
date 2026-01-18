@@ -5,29 +5,24 @@ import { ExpenseCard } from './ExpenseCard'
 export function SummaryCards() {
   return (
     <div
-      className="
-        w-full
-        flex flex-col md:flex-row
-      "
       style={{
-        gap: '16px',
-        boxSizing: 'border-box',
-        maxWidth: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        flex: '1 0 0',
+        alignSelf: 'stretch',
+        width: '100%',
       }}
     >
-      {/* BalanceCard - pode ser um pouco maior no desktop */}
-      <div className="w-full md:w-2/5">
+      {/* Cards lado a lado */}
+      <div style={{ flex: '1 0 0', alignSelf: 'stretch' }}>
         <BalanceCard />
       </div>
-
-      {/* IncomeCard e ExpenseCard - dividem o espaço restante */}
-      <div className="w-full md:w-3/5 flex flex-col md:flex-row" style={{ gap: '16px' }}>
-        <div className="w-full md:w-1/2">
-          <IncomeCard />
-        </div>
-        <div className="w-full md:w-1/2">
-          <ExpenseCard />
-        </div>
+      <div style={{ flex: '1 0 0', alignSelf: 'stretch' }}>
+        <IncomeCard />
+      </div>
+      <div style={{ flex: '1 0 0', alignSelf: 'stretch' }}>
+        <ExpenseCard />
       </div>
     </div>
   )
