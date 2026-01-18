@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react'
 import { useFinance } from '../../hooks/useFinance'
 import { formatCurrency } from '../../utils/currency'
 
-// Ícone de gráfico crescente
-const TrendingUpIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+// Ícone de cifrão ($)
+const DollarIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
-      d="M2 12L6 8L4 8L4 4L12 4L12 8L14 8L8 14L2 12Z"
-      fill="currentColor"
-      style={{ width: '16px', height: '16px' }}
+      d="M12 2V22M17 8C17 10.2091 14.7614 12 12 12C9.23858 12 7 10.2091 7 8C7 5.79086 9.23858 4 12 4C14.7614 4 17 5.79086 17 8ZM17 16C17 18.2091 14.7614 20 12 20C9.23858 20 7 18.2091 7 16C7 13.7909 9.23858 12 12 12C14.7614 12 17 13.7909 17 16Z"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 )
@@ -16,28 +18,8 @@ const TrendingUpIcon = () => (
 export function BalanceCard() {
   const { calculateTotalBalance } = useFinance()
   const [displayValue, setDisplayValue] = useState(0)
-  const [growthPercentage, setGrowthPercentage] = useState(0)
 
   const currentBalance = calculateTotalBalance()
-
-  // Calcular crescimento percentual comparando com 30 dias atrás
-  useEffect(() => {
-    // Simular saldo de 30 dias atrás (em produção viria do histórico)
-    // Por enquanto, calculamos baseado em uma variação estimada
-    const thirtyDaysAgo = new Date()
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
-
-    // Calcular saldo estimado de 30 dias atrás
-    // (em produção, isso viria de dados históricos reais)
-    const estimatedPreviousBalance = currentBalance * 0.88 // Simulação: 12% de crescimento
-
-    if (estimatedPreviousBalance > 0) {
-      const growth = ((currentBalance - estimatedPreviousBalance) / estimatedPreviousBalance) * 100
-      setGrowthPercentage(Math.round(growth))
-    } else {
-      setGrowthPercentage(0)
-    }
-  }, [currentBalance])
 
   // Animação de contagem
   useEffect(() => {
@@ -60,66 +42,44 @@ export function BalanceCard() {
     return () => clearInterval(timer)
   }, [currentBalance])
 
+  // Calcular próximo vencimento (simulado - dia 23)
+  const dueDay = 23
+
   return (
     <div
-      className="relative rounded-2xl bg-neutral-1000 text-neutral-0 overflow-hidden"
+      className="rounded-2xl"
       style={{
         display: 'flex',
-        padding: '32px',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        gap: '10px',
+        alignItems: 'center',
+        gap: '12px',
         flex: '1 0 0',
         alignSelf: 'stretch',
+        borderRadius: '16px',
+        background: '#FEFEFE',
+        padding: '32px',
       }}
     >
-      {/* Círculo decorativo verde-limão desfocado */}
-      <div
-        className="
-          absolute -top-20 -right-20
-          w-64 h-64
-          rounded-full
-          bg-brand-600
-        "
-        style={{
-          opacity: 0.15,
-          filter: 'blur(60px)',
-        }}
-        aria-hidden="true"
-      />
+      {/* Ícone */}
+      <div className="flex-shrink-0 text-neutral-1000">
+        <DollarIcon />
+      </div>
 
-      {/* Label "Saldo Total" */}
-      <p className="text-sm text-neutral-400 relative z-10" style={{ fontSize: '14px', lineHeight: '20px' }}>
-        Saldo Total
-      </p>
+      {/* Conteúdo */}
+      <div className="flex flex-col flex-1 min-w-0">
+        {/* Título */}
+        <p className="text-neutral-1000 mb-2" style={{ fontSize: '14px', lineHeight: '20px', fontWeight: 400 }}>
+          Saldo Total
+        </p>
 
-      {/* Valor formatado */}
-      <p className="text-4xl font-bold relative z-10" style={{ fontSize: '36px', lineHeight: '44px' }}>
-        {formatCurrency(displayValue)}
-      </p>
+        {/* Valor */}
+        <p className="text-neutral-1000 mb-2" style={{ fontSize: '32px', lineHeight: '40px', fontWeight: 700 }}>
+          {formatCurrency(displayValue)}
+        </p>
 
-      {/* Badge de crescimento */}
-      <div
-        className="
-          inline-flex items-center
-          rounded-full
-          bg-neutral-0 bg-opacity-20
-          font-medium
-          relative z-10
-          w-fit
-        "
-        style={{
-          padding: '6px 12px',
-          gap: '8px',
-          fontSize: '14px',
-          lineHeight: '20px',
-        }}
-      >
-        <TrendingUpIcon />
-        <span>
-          {growthPercentage > 0 ? '+' : ''}
-          {growthPercentage}% esse mês
-        </span>
+        {/* Vencimento */}
+        <p className="text-neutral-600" style={{ fontSize: '12px', lineHeight: '16px', fontWeight: 400 }}>
+          Vence dia {dueDay}
+        </p>
       </div>
     </div>
   )

@@ -34,17 +34,19 @@ export function MainLayout({ children }: MainLayoutProps) {
         {/* Spacer para header mobile */}
         <div className="lg:hidden h-16" />
         
-        {/* Conteúdo com padding responsivo e espaço para sidebar no desktop */}
+        {/* Conteúdo com padding padrão de 32px */}
         <div 
           className="
             w-full min-h-screen
-            px-4 md:px-6 lg:px-8
-            py-4 md:py-6
             transition-all duration-300 ease-in-out
             main-content-wrapper
           "
           style={{
             ['--sidebar-width' as string]: sidebarWidth,
+            padding: 'var(--space-32, 32px)',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
           } as React.CSSProperties}
         >
           {children}

@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { useFinance } from '../../hooks/useFinance'
 import { formatCurrency } from '../../utils/currency'
 
-// Ícone de seta diagonal cima-direita (saída de dinheiro)
-const ArrowUpRightIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+// Ícone de seta para cima (↑)
+const ArrowUpIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
-      d="M15 5L5 15M5 15H11M5 15V9"
+      d="M12 20V4M12 4L8 8M12 4L16 8"
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
@@ -42,44 +42,45 @@ export function ExpenseCard() {
     return () => clearInterval(timer)
   }, [expenses])
 
+  // Calcular próximo vencimento (simulado - dia 23)
+  const dueDay = 23
+
   return (
     <div
-      className="
-        flex flex-col
-        items-start
-        rounded-2xl
-        bg-neutral-0
-        border border-neutral-300
-      "
+      className="rounded-2xl"
       style={{
         display: 'flex',
-        padding: '32px',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        gap: '10px',
+        alignItems: 'center',
+        gap: '12px',
         flex: '1 0 0',
         alignSelf: 'stretch',
+        borderRadius: '16px',
+        background: '#FEFEFE',
+        padding: '32px',
       }}
     >
-      {/* Header com label e ícone */}
-      <div className="flex items-center justify-between w-full">
-        <h3 className="font-bold text-neutral-600" style={{ fontSize: '16px', lineHeight: '24px' }}>
-          Despesas
-        </h3>
-        <div
-          className="w-10 h-10 rounded-full flex items-center justify-center text-red-600 flex-shrink-0"
-          style={{
-            backgroundColor: '#FEE2E2', // red-100 - cor primitiva para ação destrutiva
-          }}
-        >
-          <ArrowUpRightIcon />
-        </div>
+      {/* Ícone */}
+      <div className="flex-shrink-0 text-neutral-1000">
+        <ArrowUpIcon />
       </div>
 
-      {/* Valor formatado */}
-      <p className="font-bold text-neutral-1000" style={{ fontSize: '32px', lineHeight: '40px' }}>
-        {formatCurrency(displayValue)}
-      </p>
+      {/* Conteúdo */}
+      <div className="flex flex-col flex-1 min-w-0">
+        {/* Título */}
+        <p className="text-neutral-1000 mb-2" style={{ fontSize: '14px', lineHeight: '20px', fontWeight: 400 }}>
+          Despesas
+        </p>
+
+        {/* Valor */}
+        <p className="text-neutral-1000 mb-2" style={{ fontSize: '32px', lineHeight: '40px', fontWeight: 700 }}>
+          {formatCurrency(displayValue)}
+        </p>
+
+        {/* Vencimento */}
+        <p className="text-neutral-600" style={{ fontSize: '12px', lineHeight: '16px', fontWeight: 400 }}>
+          Vence dia {dueDay}
+        </p>
+      </div>
     </div>
   )
 }

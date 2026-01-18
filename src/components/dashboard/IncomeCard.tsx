@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { useFinance } from '../../hooks/useFinance'
 import { formatCurrency } from '../../utils/currency'
 
-// Ícone de seta diagonal baixo-esquerda (entrada de dinheiro)
-const ArrowDownLeftIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+// Ícone de seta para baixo (↓)
+const ArrowDownIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
-      d="M5 5L15 15M15 15H9M15 15V9"
+      d="M12 4V20M12 20L8 16M12 20L16 16"
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
@@ -42,41 +42,45 @@ export function IncomeCard() {
     return () => clearInterval(timer)
   }, [income])
 
+  // Calcular próximo vencimento (simulado - dia 23)
+  const dueDay = 23
+
   return (
     <div
-      className="
-        flex flex-col
-        items-start
-        rounded-2xl
-        bg-neutral-0
-        border border-neutral-300
-      "
+      className="rounded-2xl"
       style={{
         display: 'flex',
-        padding: '32px',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        gap: '10px',
+        alignItems: 'center',
+        gap: '12px',
         flex: '1 0 0',
         alignSelf: 'stretch',
+        borderRadius: '16px',
+        background: '#FEFEFE',
+        padding: '32px',
       }}
     >
-      {/* Header com label e ícone */}
-      <div className="flex items-center justify-between w-full">
-        <h3 className="font-bold text-neutral-1000" style={{ fontSize: '16px', lineHeight: '24px' }}>
-          Receitas
-        </h3>
-        <div
-          className="w-10 h-10 rounded-full bg-neutral-200 flex items-center justify-center text-neutral-600 flex-shrink-0"
-        >
-          <ArrowDownLeftIcon />
-        </div>
+      {/* Ícone */}
+      <div className="flex-shrink-0 text-neutral-1000">
+        <ArrowDownIcon />
       </div>
 
-      {/* Valor formatado */}
-      <p className="font-bold text-neutral-1000" style={{ fontSize: '32px', lineHeight: '40px' }}>
-        {formatCurrency(displayValue)}
-      </p>
+      {/* Conteúdo */}
+      <div className="flex flex-col flex-1 min-w-0">
+        {/* Título */}
+        <p className="text-neutral-1000 mb-2" style={{ fontSize: '14px', lineHeight: '20px', fontWeight: 400 }}>
+          Receitas
+        </p>
+
+        {/* Valor */}
+        <p className="text-neutral-1000 mb-2" style={{ fontSize: '32px', lineHeight: '40px', fontWeight: 700 }}>
+          {formatCurrency(displayValue)}
+        </p>
+
+        {/* Vencimento */}
+        <p className="text-neutral-600" style={{ fontSize: '12px', lineHeight: '16px', fontWeight: 400 }}>
+          Vence dia {dueDay}
+        </p>
+      </div>
     </div>
   )
 }

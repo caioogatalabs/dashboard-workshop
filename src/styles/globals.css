@@ -39,6 +39,16 @@
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     @apply bg-neutral-500;
   }
+
+  /* Esconder scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
   
   /* Ajuste de margem para sidebar no desktop */
   @media (min-width: 1280px) {
