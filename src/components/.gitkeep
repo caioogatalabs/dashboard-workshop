@@ -1,0 +1,7 @@
+# Componentes serão organizados aqui
+# - ui/ (componentes base reutilizáveis)
+# - layout/ (Sidebar, HeaderMobile, MainLayout)
+# - dashboard/
+# - transactions/
+# - cards/
+# - profile/

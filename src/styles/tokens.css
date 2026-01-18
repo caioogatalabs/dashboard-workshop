@@ -1,0 +1,101 @@
+/* 
+ * Tokens do Design System mycash+
+ * Baseado na planilha de tokens do Google Sheets
+ * https://docs.google.com/spreadsheets/d/1icfTxXdSbtd029FfOYnrlMs2pC8HJqk5PDuEmQF5Zjo/edit
+ */
+
+:root {
+  /* ===== CORES PRIMITIVAS ===== */
+  
+  /* Neutral (Cinzas) */
+  --color-neutral-0: #FFFFFF;
+  --color-neutral-100: #F9FAFB;
+  --color-neutral-200: #F3F4F6;
+  --color-neutral-300: #E5E7EB;
+  --color-neutral-400: #D1D5DB;
+  --color-neutral-500: #9CA3AF;
+  --color-neutral-600: #6B7280;
+  --color-neutral-700: #4B5563;
+  --color-neutral-800: #374151;
+  --color-neutral-900: #1F2937;
+  --color-neutral-1000: #111827;
+  --color-neutral-1100: #080B12;
+
+  /* Brand (Verde-limão - marca mycash+) */
+  --color-brand-100: #FBFFE6;
+  --color-brand-200: #F3FFB1;
+  --color-brand-300: #EDFF8B;
+  --color-brand-400: #E4FE56;
+  --color-brand-500: #DFFE35;
+  --color-brand-600: #D7FE03;
+  --color-brand-700: #C4E703;
+  --color-brand-800: #99B402;
+  --color-brand-900: #768C02;
+  --color-brand-1000: #5A6B01;
+
+  /* Purple */
+  --color-purple-100: #F4ECFE;
+  --color-purple-200: #E8D8FD;
+  --color-purple-300: #D2B1FB;
+  --color-purple-400: #BC8AF9;
+  --color-purple-500: #A663F7;
+  --color-purple-600: #903CF5;
+  --color-purple-700: #7330C4;
+  --color-purple-800: #562493;
+  --color-purple-900: #3A1862;
+  --color-purple-1000: #1D0C31;
+
+  /* Green */
+  --color-green-100: #E6FEF4;
+  --color-green-200: #CCFDE9;
+  --color-green-300: #99FBD3;
+  --color-green-400: #73D8AE;
+  --color-green-500: #44CB93;
+  --color-green-600: #15BE78;
+  --color-green-700: #119860;
+  --color-green-800: #0D7248;
+  --color-green-900: #084C30;
+  --color-green-1000: #042618;
+
+  /* Blue */
+  --color-blue-100: #EAF3FD;
+  --color-blue-200: #D4E7FC;
+  --color-blue-300: #AAD0F9;
+  --color-blue-400: #7FB8F5;
+  --color-blue-500: #55A1F2;
+  --color-blue-600: #2A89EF;
+  --color-blue-700: #226EBF;
+  --color-blue-800: #19528F;
+  --color-blue-900: #113760;
+  --color-blue-1000: #081B30;
+
+  /* ===== ESPAÇAMENTOS PRIMITIVOS ===== */
+  --space-0: 0px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-64: 64px;
+
+  /* ===== TOKENS SEMÂNTICOS ===== */
+  /* Estes serão definidos com base nas primitivas durante implementação */
+  
+  /* Cores semânticas - serão adicionadas conforme necessário */
+  --color-bg-primary: var(--color-neutral-0);
+  --color-bg-secondary: var(--color-neutral-100);
+  --color-text-primary: var(--color-neutral-1000);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-border: var(--color-neutral-300);
+  
+  /* Espaçamentos semânticos - serão adicionados conforme necessário */
+  --spacing-page: var(--space-16);
+  --spacing-container: var(--space-24);
+  --spacing-section: var(--space-32);
+}
