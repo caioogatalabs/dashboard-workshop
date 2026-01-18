@@ -1,6 +1,5 @@
 import { FC, useState, useMemo } from 'react'
 import { useFinance } from '../../hooks/useFinance'
-import { Transaction } from '../../types/transaction'
 import { WalletIcon } from './icons/WalletIcon'
 import { PlusIcon } from './icons/PlusIcon'
 import { CheckIcon } from './icons/CheckIcon'
@@ -64,13 +63,19 @@ export const UpcomingExpensesWidget: FC = () => {
       nextDate.setMonth(nextDate.getMonth() + 1)
 
       addTransaction({
-        ...transaction,
-        id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        type: transaction.type,
+        amount: transaction.amount,
+        description: transaction.description,
+        category: transaction.category,
         date: nextDate,
+        accountId: transaction.accountId,
+        memberId: transaction.memberId,
+        installments: transaction.installments,
+        currentInstallment: transaction.currentInstallment,
+        isRecurring: transaction.isRecurring,
+        recurringPeriod: transaction.recurringPeriod,
         isPaid: false,
         status: 'pending',
-        createdAt: new Date(),
-        updatedAt: new Date(),
       })
     }
 
@@ -80,14 +85,19 @@ export const UpcomingExpensesWidget: FC = () => {
       nextDate.setMonth(nextDate.getMonth() + 1)
 
       addTransaction({
-        ...transaction,
-        id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        type: transaction.type,
+        amount: transaction.amount,
+        description: transaction.description,
+        category: transaction.category,
         date: nextDate,
+        accountId: transaction.accountId,
+        memberId: transaction.memberId,
+        installments: transaction.installments,
         currentInstallment: transaction.currentInstallment + 1,
+        isRecurring: transaction.isRecurring,
+        recurringPeriod: transaction.recurringPeriod,
         isPaid: false,
         status: 'pending',
-        createdAt: new Date(),
-        updatedAt: new Date(),
       })
     }
 

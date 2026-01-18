@@ -3,7 +3,6 @@ import { Transaction } from '../../types/transaction'
 import { CreditCard, BankAccount } from '../../types'
 import { formatCurrency } from '../../utils/currency'
 import { CheckIcon } from './icons/CheckIcon'
-import { useFinance } from '../../hooks/useFinance'
 
 interface UpcomingExpenseItemProps {
   transaction: Transaction
