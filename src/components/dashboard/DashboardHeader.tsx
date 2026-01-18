@@ -47,6 +47,9 @@ export function DashboardHeader() {
         alignSelf: 'stretch',
         borderRadius: '8px',
         background: 'var(--color-brand-700, #AFEA00)',
+        boxSizing: 'border-box',
+        maxWidth: '100%',
+        overflowX: 'hidden',
       }}
     >
       {/* Lado esquerdo: Busca e Filtros */}

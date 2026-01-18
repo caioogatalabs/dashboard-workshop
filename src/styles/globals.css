@@ -7,6 +7,12 @@
     @apply border-neutral-300;
   }
   
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
   body {
     @apply bg-neutral-0 text-neutral-1000 antialiased;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -14,10 +20,13 @@
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
   
   #root {
     @apply min-h-screen w-full;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 }
 
@@ -50,11 +59,21 @@
     display: none;
   }
   
-  /* Ajuste de margem para sidebar no desktop */
+  /* Ajuste de margem e largura para sidebar no desktop */
   @media (min-width: 1280px) {
-    .main-content-wrapper {
+    .main-content-area {
       margin-left: var(--sidebar-width, 256px);
-      transition: margin-left 300ms ease-in-out;
+      width: calc(100% - var(--sidebar-width, 256px));
+      max-width: calc(100% - var(--sidebar-width, 256px));
+      transition: margin-left 300ms ease-in-out, width 300ms ease-in-out, max-width 300ms ease-in-out;
+    }
+  }
+  
+  @media (max-width: 1279px) {
+    .main-content-area {
+      margin-left: 0;
+      width: 100%;
+      max-width: 100%;
     }
   }
   

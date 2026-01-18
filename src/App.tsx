@@ -3,7 +3,7 @@ import { MainLayout } from './components/layout/MainLayout'
 import { FinanceProvider } from './contexts/FinanceContext'
 import { ROUTES } from './constants'
 
-import { SummaryCards, DashboardHeader, ExpensesByCategoryCarousel } from './components/dashboard'
+import { SummaryCards, DashboardHeader, ExpensesByCategoryCarousel, FinancialFlowChart, CreditCardsWidget } from './components/dashboard'
 
 // Placeholder components - serão implementados nos próximos prompts
 const Dashboard = () => (
@@ -15,13 +15,18 @@ const Dashboard = () => (
       gap: '32px',
       flex: '1 0 0',
       width: '100%',
+      maxWidth: '100%',
       height: '100%',
       minHeight: '100%',
+      boxSizing: 'border-box',
+      overflowX: 'hidden',
     }}
   >
     <DashboardHeader />
     <SummaryCards />
     <ExpensesByCategoryCarousel />
+    <FinancialFlowChart />
+    <CreditCardsWidget />
   </div>
 )
 const Transactions = () => <div>Transações - Em construção</div>

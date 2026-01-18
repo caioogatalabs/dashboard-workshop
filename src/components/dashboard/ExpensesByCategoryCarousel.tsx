@@ -91,7 +91,7 @@ export function ExpensesByCategoryCarousel() {
   }
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full" style={{ maxWidth: '100%', boxSizing: 'border-box' }}>
       {/* Container do carrossel */}
       <div
         ref={carouselRef}
@@ -118,6 +118,8 @@ export function ExpensesByCategoryCarousel() {
           alignItems: 'center',
           gap: '12px',
           alignSelf: 'stretch',
+          maxWidth: '100%',
+          boxSizing: 'border-box',
           // Gradiente de máscara nas bordas
           maskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
           WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',

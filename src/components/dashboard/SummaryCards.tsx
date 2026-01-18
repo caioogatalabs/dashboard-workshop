@@ -11,6 +11,8 @@ export function SummaryCards() {
       "
       style={{
         gap: '16px',
+        boxSizing: 'border-box',
+        maxWidth: '100%',
       }}
     >
       {/* BalanceCard - pode ser um pouco maior no desktop */}

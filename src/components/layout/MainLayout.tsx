@@ -14,7 +14,7 @@ export function MainLayout({ children }: MainLayoutProps) {
   const sidebarWidth = isExpanded ? '256px' : '80px'
 
   return (
-    <div className="flex min-h-screen bg-neutral-100">
+    <div className="flex min-h-screen bg-neutral-100" style={{ overflowX: 'hidden', maxWidth: '100vw' }}>
       {/* Header Mobile - só renderiza em mobile/tablet (<1024px) */}
       <HeaderMobile />
 
@@ -24,12 +24,14 @@ export function MainLayout({ children }: MainLayoutProps) {
       {/* Main Content - ajusta margin-left conforme sidebar expande/colapsa */}
       <main
         className="
-          flex-1 w-full
+          flex-1
           transition-all duration-300 ease-in-out
+          main-content-area
         "
         style={{
-          marginLeft: 0, // No mobile/tablet, sem margin
-        }}
+          ['--sidebar-width' as string]: sidebarWidth,
+          overflowX: 'hidden',
+        } as React.CSSProperties}
       >
         {/* Spacer para header mobile */}
         <div className="lg:hidden h-16" />
@@ -39,7 +41,6 @@ export function MainLayout({ children }: MainLayoutProps) {
           className="
             w-full min-h-screen
             transition-all duration-300 ease-in-out
-            main-content-wrapper
           "
           style={{
             ['--sidebar-width' as string]: sidebarWidth,
@@ -47,6 +48,10 @@ export function MainLayout({ children }: MainLayoutProps) {
             display: 'flex',
             flexDirection: 'column',
             height: '100%',
+            boxSizing: 'border-box',
+            overflowX: 'hidden',
+            width: '100%',
+            maxWidth: '100%',
           } as React.CSSProperties}
         >
           {children}
