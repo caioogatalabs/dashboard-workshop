@@ -4,7 +4,7 @@
 
 - [x] PROMPT 0: Análise e Planejamento Inicial
 - [x] PROMPT 1: Estrutura Base e Configuração
-- [ ] PROMPT 2: Sistema de Layout e Navegação Desktop
+- [x] PROMPT 2: Sistema de Layout e Navegação Desktop
 - [ ] PROMPT 3: Sistema de Layout e Navegação Mobile
 - [ ] PROMPT 4: Context Global e Gerenciamento de Estado
 - [ ] PROMPT 5: Cards de Resumo Financeiro
@@ -230,6 +230,76 @@ src/
 - Tipos TypeScript completos e tipados conforme especificações
 - React Router configurado com 5 rotas (Dashboard, Transactions, Cards, Goals, Profile)
 - Componentes placeholder criados nas rotas (serão implementados nos próximos prompts)
+
+---
+
+## ✅ PROMPT 2: Sistema de Layout e Navegação Desktop
+
+**Status:** ✅ CONCLUÍDO  
+**Data:** DD/MM/YYYY  
+**Build:** ✅ Sucesso (tentativas: 1)
+
+### Implementado
+
+- Hook `useSidebar` para gerenciar estado expandido/colapsado
+- Componente `Sidebar` com altura total do viewport
+- Estado expandido: logo completo "mycash+", nomes de seções, perfil completo
+- Estado colapsado: ícone logo "m+", ícones de seções, apenas avatar
+- Botão circular na borda direita para alternar estados
+- Ícone muda dinamicamente: seta esquerda (expandido) / seta direita (colapsado)
+- Transições suaves (300ms ease-in-out) para largura da sidebar
+- Tooltip ao passar mouse sobre itens quando colapsada (com delay de 300ms)
+- Item ativo destacado: fundo preto (`bg-neutral-1000`), texto branco, ícone verde-limão (`text-brand-600`)
+- Itens inativos: fundo transparente, texto cinza, hover com fundo cinza claro
+- Componente `MainLayout` integrando sidebar e conteúdo principal
+- Sidebar só renderiza no desktop (≥1280px, breakpoint `lg` do Tailwind)
+- Conteúdo principal empurrado pela sidebar fixa no desktop
+
+### Tokens
+
+**Primitivas:**
+- `bg-neutral-0`, `bg-neutral-1000`, `bg-neutral-200`, `bg-neutral-300`
+- `text-neutral-0`, `text-neutral-600`, `text-neutral-1000`
+- `border-neutral-300`
+- `text-brand-600` (ícone ativo)
+- Espaçamentos: `px-3`, `py-2.5`, `p-4`, `gap-2`, `gap-3`
+
+**Semânticas:**
+- Nenhuma específica usada ainda (aguardando definição no design system)
+
+**Conversões:**
+- Nenhuma conversão necessária (todos os valores usam tokens primitivos)
+
+### Arquivos Criados
+
+**Layout:**
+- `src/components/layout/Sidebar.tsx`
+- `src/components/layout/SidebarItem.tsx`
+- `src/components/layout/MainLayout.tsx`
+- `src/components/layout/index.ts`
+
+**Hooks:**
+- `src/hooks/useSidebar.ts`
+
+**Modificados:**
+- `src/App.tsx` (integração com MainLayout)
+
+### Build
+
+✅ **Sucesso (tentativas: 1)**
+
+**Correções aplicadas:**
+- Removidos imports não utilizados (`useLocation`, `useSidebar` do Sidebar, `useEffect` do hook)
+- Build final: `dist/index.html` (0.50 kB), CSS (11.07 kB), JS (170.44 kB)
+
+### Observações
+
+- Sidebar implementada seguindo regras: só desktop (≥1280px), não renderiza em mobile/tablet
+- Transições suaves com `duration-300 ease-in-out`
+- Tooltip implementado com grupo hover do Tailwind e delay de 300ms
+- Ícones SVG inline temporários (serão substituídos por biblioteca de ícones no futuro)
+- Layout fluido: sidebar com `fixed`, conteúdo com espaçamento responsivo
+- Todos os estilos usam exclusivamente tokens do design system
 
 ---
 
