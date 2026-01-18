@@ -39,4 +39,33 @@
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     @apply bg-neutral-500;
   }
+  
+  /* Ajuste de margem para sidebar no desktop */
+  @media (min-width: 1280px) {
+    .main-content-wrapper {
+      margin-left: var(--sidebar-width, 256px);
+      transition: margin-left 300ms ease-in-out;
+    }
+  }
+  
+  /* Header Mobile e Menu - visíveis apenas abaixo de 1024px */
+  @media (max-width: 1023px) {
+    header[data-mobile-header] {
+      display: flex !important;
+    }
+    div[data-mobile-overlay] {
+      display: block !important;
+    }
+    div[data-mobile-menu] {
+      display: flex !important;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    header[data-mobile-header],
+    div[data-mobile-overlay],
+    div[data-mobile-menu] {
+      display: none !important;
+    }
+  }
 }

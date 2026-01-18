@@ -1,3 +1,5 @@
 export { Sidebar } from './Sidebar'
 export { SidebarItem } from './SidebarItem'
+export { HeaderMobile } from './HeaderMobile'
+export { MenuDropdown } from './MenuDropdown'
 export { MainLayout } from './MainLayout'
