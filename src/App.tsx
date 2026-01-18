@@ -5,6 +5,8 @@ import { ROUTES } from './constants'
 
 import { SummaryCards, DashboardHeader, ExpensesByCategoryCarousel, FinancialFlowChart } from './components/dashboard'
 import { CreditCardsWidget } from './components/dashboard/CreditCardsWidget'
+import { UpcomingExpensesWidget } from './components/dashboard/UpcomingExpensesWidget'
+import { TransactionsTable } from './components/dashboard/TransactionsTable'
 
 // Placeholder components - serão implementados nos próximos prompts
 const Dashboard = () => (
@@ -64,9 +66,22 @@ const Dashboard = () => (
         </div>
       </div>
 
-      {/* Financial Flow Chart - abaixo */}
+      {/* Financial Flow Chart e Próximas Despesas - lado a lado */}
+      <div className="w-full flex flex-col lg:flex-row gap-8">
+        {/* Left - Financial Flow Chart */}
+        <div className="w-full lg:flex-1">
+          <FinancialFlowChart />
+        </div>
+
+        {/* Right - Upcoming Expenses Widget */}
+        <div className="w-full lg:flex-1">
+          <UpcomingExpensesWidget />
+        </div>
+      </div>
+
+      {/* Transactions Table - abaixo */}
       <div className="w-full">
-        <FinancialFlowChart />
+        <TransactionsTable />
       </div>
     </div>
   </div>
