@@ -86,10 +86,14 @@ const Dashboard = () => (
     </div>
   </div>
 )
-const Transactions = () => <div>Transações - Em construção</div>
-const Cards = () => <div>Cartões - Em construção</div>
+import { CardsView } from './pages/CardsView'
+import { TransactionsView } from './pages/TransactionsView'
+import { ProfileView } from './pages/ProfileView'
+
+const Transactions = () => <TransactionsView />
+const Cards = () => <CardsView />
 const Goals = () => <div>Objetivos - Em construção</div>
-const Profile = () => <div>Perfil - Em construção</div>
+const Profile = () => <ProfileView />
 
 function App() {
   return (
