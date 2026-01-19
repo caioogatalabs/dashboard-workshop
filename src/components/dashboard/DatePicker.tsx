@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useFinance } from '../../hooks/useFinance'
 import { CalendarIcon } from './icons/CalendarIcon'
+import { ModalOverlay } from './ModalOverlay'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
@@ -14,37 +15,18 @@ export function DatePicker({ isOpen, onToggle }: DatePickerProps) {
   const [selectedStart, setSelectedStart] = useState<Date | null>(dateRange.startDate)
   const [selectedEnd, setSelectedEnd] = useState<Date | null>(dateRange.endDate)
   const [currentMonth, setCurrentMonth] = useState(new Date())
-  const calendarRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setSelectedStart(dateRange.startDate)
     setSelectedEnd(dateRange.endDate)
   }, [dateRange])
 
-  // Fechar ao clicar fora
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
-        if (isOpen) {
-          onToggle()
-        }
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [isOpen, onToggle])
-
   const formatDateRange = () => {
     if (dateRange.startDate && dateRange.endDate) {
-      return `${format(dateRange.startDate, 'dd MMM', { locale: ptBR })} - ${format(
-        dateRange.endDate,
-        'dd MMM yyyy',
-        { locale: ptBR }
-      )}`
+      const startFormatted = format(dateRange.startDate, 'dd MMM', { locale: ptBR })
+      const endFormatted = format(dateRange.endDate, 'dd MMM yyyy', { locale: ptBR })
+      return `${startFormatted} - ${endFormatted}`
     }
     if (dateRange.startDate) {
       return format(dateRange.startDate, 'dd MMM yyyy', { locale: ptBR })
@@ -153,61 +135,105 @@ export function DatePicker({ isOpen, onToggle }: DatePickerProps) {
   ]
 
   return (
-    <div className="relative" ref={calendarRef}>
-      <button
-        onClick={onToggle}
-        className="flex items-center gap-2 px-3 py-2 rounded-lg border border-neutral-300 bg-neutral-0 text-neutral-600 hover:bg-neutral-100 transition-colors whitespace-nowrap"
-        style={{ fontSize: '14px', lineHeight: '20px' }}
-      >
-        <CalendarIcon />
-        <span>{formatDateRange()}</span>
-      </button>
+    <>
+      <div className="relative">
+        <button
+          onClick={onToggle}
+          className="flex items-center gap-2 text-neutral-500 hover:text-neutral-0 transition-colors whitespace-nowrap"
+          style={{
+            display: 'flex',
+            padding: 'var(--space-12, 12px) var(--space-16, 16px)',
+            alignItems: 'center',
+            gap: 'var(--space-8, 8px)',
+            borderRadius: 'var(--shape-100, 100px)',
+            background: 'var(--color-neutral-1100, #060B14)',
+            border: '1px solid var(--color-neutral-900, #1F2937)',
+            fontSize: '14px',
+            lineHeight: '20px',
+            minHeight: '48px',
+          }}
+        >
+          <CalendarIcon style={{ width: '16px', height: '16px' }} />
+          <span>{formatDateRange()}</span>
+        </button>
+      </div>
 
-      {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-80 rounded-lg border border-neutral-300 bg-neutral-0 shadow-lg z-50 p-4">
+      <ModalOverlay isOpen={isOpen} onClose={onToggle}>
+        <div
+          ref={contentRef}
+          className="rounded-[28px] shadow-lg"
+          style={{
+            display: 'flex',
+            width: '360px',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            borderRadius: '28px',
+            background: 'var(--color-neutral-1100, #060B14)',
+            padding: 'var(--space-16, 16px)',
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="w-full mb-4">
+            <h3 className="text-neutral-0 mb-2" style={{ fontSize: '14px', lineHeight: '20px', fontWeight: 400 }}>
+              Select date
+            </h3>
+            {selectedStart && (
+              <div className="text-brand-600" style={{ fontSize: '24px', lineHeight: '32px', fontWeight: 600 }}>
+                {format(selectedStart, 'EEE, MMM dd', { locale: ptBR }).replace(/\./g, '')}
+              </div>
+            )}
+          </div>
+
           {/* Atalhos rápidos */}
-          <div className="grid grid-cols-2 gap-2 mb-4">
+          <div className="grid grid-cols-2 gap-2 mb-4 w-full">
             <button
               onClick={() => handleQuickSelect('thisMonth')}
-              className="px-3 py-2 text-sm rounded-lg border border-neutral-300 hover:bg-neutral-100 transition-colors"
+              className="px-3 py-2 text-sm rounded-lg border border-neutral-800 bg-transparent text-neutral-400 hover:bg-neutral-900 transition-colors"
+              style={{ fontSize: '14px', lineHeight: '20px' }}
             >
               Este mês
             </button>
             <button
               onClick={() => handleQuickSelect('lastMonth')}
-              className="px-3 py-2 text-sm rounded-lg border border-neutral-300 hover:bg-neutral-100 transition-colors"
+              className="px-3 py-2 text-sm rounded-lg border border-neutral-800 bg-transparent text-neutral-400 hover:bg-neutral-900 transition-colors"
+              style={{ fontSize: '14px', lineHeight: '20px' }}
             >
               Mês passado
             </button>
             <button
               onClick={() => handleQuickSelect('last3Months')}
-              className="px-3 py-2 text-sm rounded-lg border border-neutral-300 hover:bg-neutral-100 transition-colors"
+              className="px-3 py-2 text-sm rounded-lg border border-neutral-800 bg-transparent text-neutral-400 hover:bg-neutral-900 transition-colors"
+              style={{ fontSize: '14px', lineHeight: '20px' }}
             >
               Últimos 3 meses
             </button>
             <button
               onClick={() => handleQuickSelect('thisYear')}
-              className="px-3 py-2 text-sm rounded-lg border border-neutral-300 hover:bg-neutral-100 transition-colors"
+              className="px-3 py-2 text-sm rounded-lg border border-neutral-800 bg-transparent text-neutral-400 hover:bg-neutral-900 transition-colors"
+              style={{ fontSize: '14px', lineHeight: '20px' }}
             >
               Este ano
             </button>
           </div>
 
           {/* Calendário */}
-          <div className="mb-4">
+          <div className="mb-4 w-full">
             <div className="flex items-center justify-between mb-3">
               <button
                 onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
-                className="p-1 hover:bg-neutral-100 rounded"
+                className="p-1 hover:bg-neutral-900 rounded text-neutral-400"
+                style={{ fontSize: '16px' }}
               >
                 ←
               </button>
-              <h3 className="font-semibold text-neutral-1000">
+              <h3 className="font-semibold text-neutral-0" style={{ fontSize: '14px', lineHeight: '20px' }}>
                 {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
               </h3>
               <button
                 onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
-                className="p-1 hover:bg-neutral-100 rounded"
+                className="p-1 hover:bg-neutral-900 rounded text-neutral-400"
+                style={{ fontSize: '16px' }}
               >
                 →
               </button>
@@ -215,8 +241,8 @@ export function DatePicker({ isOpen, onToggle }: DatePickerProps) {
 
             {/* Dias da semana */}
             <div className="grid grid-cols-7 gap-1 mb-2">
-              {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map((day) => (
-                <div key={day} className="text-center text-xs text-neutral-600 font-medium py-1">
+              {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
+                <div key={day} className="text-center text-xs text-neutral-400 font-medium py-1">
                   {day}
                 </div>
               ))}
@@ -239,13 +265,14 @@ export function DatePicker({ isOpen, onToggle }: DatePickerProps) {
                     onClick={() => handleDateClick(date)}
                     className={`aspect-square rounded text-sm transition-colors ${
                       isSelected
-                        ? 'bg-neutral-1000 text-neutral-0 font-semibold'
+                        ? 'bg-brand-600 text-neutral-1100 font-semibold'
                         : inRange
-                          ? 'bg-neutral-200 text-neutral-1000'
+                          ? 'bg-neutral-900 text-neutral-0'
                           : isToday
-                            ? 'bg-brand-100 text-neutral-1000 font-semibold'
-                            : 'hover:bg-neutral-100 text-neutral-1000'
+                            ? 'border border-brand-600 text-neutral-0'
+                            : 'hover:bg-neutral-900 text-neutral-0'
                     }`}
+                    style={{ fontSize: '14px', lineHeight: '20px' }}
                   >
                     {date.getDate()}
                   </button>
@@ -254,17 +281,43 @@ export function DatePicker({ isOpen, onToggle }: DatePickerProps) {
             </div>
           </div>
 
-          {/* Botão confirmar */}
-          {selectedStart && selectedEnd && (
+          {/* Botões de ação */}
+          <div className="flex items-center justify-between w-full gap-2">
             <button
-              onClick={confirmSelection}
-              className="w-full px-4 py-2 rounded-lg bg-neutral-1000 text-neutral-0 font-medium hover:bg-neutral-900 transition-colors"
+              onClick={() => {
+                setSelectedStart(null)
+                setSelectedEnd(null)
+                setDateRange({ startDate: null, endDate: null })
+              }}
+              className="px-4 py-2 text-sm text-neutral-400 hover:text-neutral-0 transition-colors"
+              style={{ fontSize: '14px', lineHeight: '20px' }}
             >
-              Confirmar
+              Clear
             </button>
-          )}
+            <div className="flex gap-2">
+              <button
+                onClick={onToggle}
+                className="px-4 py-2 text-sm text-neutral-400 hover:text-neutral-0 transition-colors"
+                style={{ fontSize: '14px', lineHeight: '20px' }}
+              >
+                Cancel
+              </button>
+              {selectedStart && selectedEnd && (
+                <button
+                  onClick={() => {
+                    confirmSelection()
+                    onToggle()
+                  }}
+                  className="px-4 py-2 text-sm rounded-lg bg-brand-600 text-neutral-1100 font-medium hover:bg-brand-500 transition-colors"
+                  style={{ fontSize: '14px', lineHeight: '20px' }}
+                >
+                  OK
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-      )}
-    </div>
+      </ModalOverlay>
+    </>
   )
 }

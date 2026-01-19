@@ -4,10 +4,12 @@ import { WalletIcon } from './icons/WalletIcon'
 import { PlusIcon } from './icons/PlusIcon'
 import { CheckIcon } from './icons/CheckIcon'
 import { UpcomingExpenseItem } from './UpcomingExpenseItem'
+import { NewTransactionModal } from '../modals/NewTransactionModal'
 
 export const UpcomingExpensesWidget: FC = () => {
   const { transactions, creditCards, bankAccounts, updateTransaction, addTransaction } = useFinance()
   const [removedIds, setRemovedIds] = useState<Set<string>>(new Set())
+  const [isNewTransactionOpen, setIsNewTransactionOpen] = useState(false)
 
   // Buscar despesas pendentes e ordenar por data de vencimento
   const upcomingExpenses = useMemo(() => {
@@ -109,8 +111,7 @@ export const UpcomingExpensesWidget: FC = () => {
   }
 
   const handleAddExpense = () => {
-    // TODO: Abrir modal de adicionar transação (PROMPT 12)
-    console.log('Add expense clicked')
+    setIsNewTransactionOpen(true)
   }
 
   return (
@@ -213,6 +214,11 @@ export const UpcomingExpensesWidget: FC = () => {
           })}
         </div>
       )}
+      
+      <NewTransactionModal
+        isOpen={isNewTransactionOpen}
+        onClose={() => setIsNewTransactionOpen(false)}
+      />
     </div>
   )
 }

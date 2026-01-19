@@ -4,12 +4,19 @@ import { CreditCard } from '../../types/creditCard'
 import { CreditCardIcon } from './icons/CreditCardIcon'
 import { PlusIcon } from './icons/PlusIcon'
 import { CreditCardItem } from './CreditCardItem'
+import { AddAccountModal } from '../modals/AddAccountModal'
+import { CardDetailsModal } from '../modals/CardDetailsModal'
+import { NewTransactionModal } from '../modals/NewTransactionModal'
 
 const CARDS_PER_PAGE = 3
 
 export const CreditCardsWidget: FC = () => {
   const { creditCards } = useFinance()
   const [currentPage, setCurrentPage] = useState(0)
+  const [isAddAccountOpen, setIsAddAccountOpen] = useState(false)
+  const [isCardDetailsOpen, setIsCardDetailsOpen] = useState(false)
+  const [selectedCard, setSelectedCard] = useState<CreditCard | null>(null)
+  const [isNewTransactionOpen, setIsNewTransactionOpen] = useState(false)
 
   const totalPages = Math.ceil(creditCards.length / CARDS_PER_PAGE)
   const startIndex = currentPage * CARDS_PER_PAGE
@@ -17,13 +24,17 @@ export const CreditCardsWidget: FC = () => {
   const displayedCards = creditCards.slice(startIndex, endIndex)
 
   const handleCardClick = (card: CreditCard) => {
-    // TODO: Abrir modal de detalhes do cartão (PROMPT 15)
-    console.log('Card clicked:', card)
+    setSelectedCard(card)
+    setIsCardDetailsOpen(true)
   }
 
   const handleAddCard = () => {
-    // TODO: Abrir modal de adicionar cartão (PROMPT 14)
-    console.log('Add card clicked')
+    setIsAddAccountOpen(true)
+  }
+
+  const handleAddExpense = () => {
+    setIsCardDetailsOpen(false)
+    setIsNewTransactionOpen(true)
   }
 
   const handlePreviousPage = () => {
@@ -163,6 +174,27 @@ export const CreditCardsWidget: FC = () => {
           )}
         </>
       )}
+      
+      <AddAccountModal
+        isOpen={isAddAccountOpen}
+        onClose={() => setIsAddAccountOpen(false)}
+      />
+      
+      <CardDetailsModal
+        isOpen={isCardDetailsOpen}
+        onClose={() => {
+          setIsCardDetailsOpen(false)
+          setSelectedCard(null)
+        }}
+        card={selectedCard}
+        onAddExpense={handleAddExpense}
+      />
+      
+      <NewTransactionModal
+        isOpen={isNewTransactionOpen}
+        onClose={() => setIsNewTransactionOpen(false)}
+        preselectedAccountId={selectedCard?.id}
+      />
     </div>
   )
 }

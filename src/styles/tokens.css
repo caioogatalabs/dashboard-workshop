@@ -98,4 +98,7 @@
   --spacing-page: var(--space-16);
   --spacing-container: var(--space-24);
   --spacing-section: var(--space-32);
+
+  /* ===== SHAPES (BORDER RADIUS) ===== */
+  --shape-100: 100px;
 }

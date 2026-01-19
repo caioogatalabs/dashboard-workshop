@@ -58,6 +58,20 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* Animação slide-up para modais mobile */
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
   
   /* Ajuste de margem e largura para sidebar no desktop */
   @media (min-width: 1280px) {

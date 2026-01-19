@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { useFinance } from '../../hooks/useFinance'
 import { PlusIcon } from './icons/PlusIcon'
 import { CheckIcon } from './icons/CheckIcon'
+import { AddMemberModal } from '../modals/AddMemberModal'
 
 export function FamilyMembersWidget() {
   const { familyMembers, selectedMember, setSelectedMember } = useFinance()
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [isAddMemberOpen, setIsAddMemberOpen] = useState(false)
 
   const handleMemberClick = (memberId: string) => {
     if (selectedMember === memberId) {
@@ -36,9 +38,9 @@ export function FamilyMembersWidget() {
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1 h-full">
       {/* Avatares sobrepostos */}
-      <div className="flex items-center -space-x-2">
+      <div className="flex items-center -space-x-1.5">
         {familyMembers.slice(0, 4).map((member, index) => {
           const isSelected = selectedMember === member.id
           const isHovered = hoveredIndex === index
@@ -50,7 +52,7 @@ export function FamilyMembersWidget() {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               className={`
-                relative w-10 h-10 rounded-full border-2 transition-all duration-200
+                relative rounded-full border-2 transition-all duration-200
                 ${isSelected ? 'border-neutral-1000 z-10' : 'border-neutral-0'}
                 ${isHovered ? 'scale-110 z-20' : ''}
                 ${getAvatarColor(index)} text-neutral-0
@@ -58,8 +60,10 @@ export function FamilyMembersWidget() {
                 shadow-sm
               `}
               style={{
-                fontSize: '14px',
-                lineHeight: '20px',
+                width: '32px',
+                height: '32px',
+                fontSize: '12px',
+                lineHeight: '16px',
                 transform: isHovered ? 'scale(1.1) translateX(4px)' : undefined,
               }}
               aria-label={`Filtrar por ${member.name}`}
@@ -76,8 +80,8 @@ export function FamilyMembersWidget() {
 
               {/* Check verde quando selecionado */}
               {isSelected && (
-                <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-brand-600 border-2 border-neutral-0 flex items-center justify-center">
-                  <CheckIcon />
+                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-brand-600 border-2 border-neutral-0 flex items-center justify-center">
+                  <CheckIcon style={{ width: '8px', height: '8px' }} />
                 </div>
               )}
             </button>
@@ -87,11 +91,21 @@ export function FamilyMembersWidget() {
 
       {/* Botão adicionar membro */}
       <button
-        className="w-10 h-10 rounded-full border-2 border-neutral-300 bg-neutral-0 text-neutral-600 hover:bg-neutral-100 transition-colors flex items-center justify-center"
+        onClick={() => setIsAddMemberOpen(true)}
+        className="rounded-full border-2 border-neutral-300 bg-neutral-0 text-neutral-600 hover:bg-neutral-100 transition-colors flex items-center justify-center flex-shrink-0"
+        style={{
+          width: '32px',
+          height: '32px',
+        }}
         aria-label="Adicionar membro"
       >
-        <PlusIcon />
+        <PlusIcon style={{ width: '16px', height: '16px' }} />
       </button>
+      
+      <AddMemberModal
+        isOpen={isAddMemberOpen}
+        onClose={() => setIsAddMemberOpen(false)}
+      />
     </div>
   )
 }
