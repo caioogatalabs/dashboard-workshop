@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useFinance } from '../../hooks/useFinance'
 import { CalendarIcon } from './icons/CalendarIcon'
-import { ModalOverlay } from '../ui/ModalOverlay'
+import { ModalOverlay } from './ModalOverlay'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 

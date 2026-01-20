@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ModalOverlay } from '../ui/ModalOverlay'
+import { ModalOverlay } from '../dashboard/ModalOverlay'
 import { CloseIcon } from '../dashboard/icons/CloseIcon'
 
 export type CategoryType = 'income' | 'expense'
