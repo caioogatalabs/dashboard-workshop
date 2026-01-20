@@ -10,7 +10,8 @@ import { EditIcon } from '../components/dashboard/icons/EditIcon'
 import { TrashIcon } from '../components/dashboard/icons/TrashIcon'
 import { AddMemberModal } from '../components/modals/AddMemberModal'
 import { CategoryModal, CategoryType } from '../components/modals/CategoryModal'
-import { ToggleSwitch } from '../components/ui/ToggleSwitch'
+import { SwitchWrapper } from '../components/ui/SwitchWrapper'
+import { Button } from '../components/ui/button'
 import { DEFAULT_INCOME_CATEGORIES, DEFAULT_EXPENSE_CATEGORIES, APP_VERSION } from '../constants'
 
 type TabType = 'info' | 'settings'
@@ -216,18 +217,14 @@ export function ProfileView() {
                 Membros da Família
               </h3>
               {familyMembers.length > 1 && (
-                <button
+                <Button
                   onClick={() => setIsAddMemberOpen(true)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-neutral-300 bg-neutral-0 text-neutral-1000 hover:bg-neutral-100 transition-colors"
-                  style={{
-                    fontSize: '14px',
-                    lineHeight: '20px',
-                    fontWeight: 500,
-                  }}
+                  variant="outline"
+                  className="flex items-center gap-2"
                 >
                   <PlusIcon style={{ width: '16px', height: '16px' }} />
                   <span>Adicionar Membro</span>
-                </button>
+                </Button>
               )}
             </div>
 
@@ -257,21 +254,12 @@ export function ProfileView() {
                 >
                   Adicione outros membros da família para gerenciar as finanças em conjunto
                 </p>
-                <button
+                <Button
                   onClick={() => setIsAddMemberOpen(true)}
-                  className="px-6 py-3 rounded-lg bg-neutral-1000 text-neutral-0 hover:bg-neutral-900 transition-colors"
-                  style={{
-                    padding: '12px 24px',
-                    borderRadius: '8px',
-                    background: 'var(--color-neutral-1000, #111827)',
-                    color: 'var(--color-neutral-0, #FFFFFF)',
-                    fontSize: '14px',
-                    lineHeight: '20px',
-                    fontWeight: 500,
-                  }}
+                  className="px-6 py-3 rounded-lg bg-neutral-1000 text-neutral-0 hover:bg-neutral-900"
                 >
                   Adicionar Membro da Família
-                </button>
+                </Button>
               </div>
             ) : (
               <div className="w-full flex flex-col gap-3">
@@ -546,7 +534,7 @@ function SettingsTab() {
         </h3>
 
         <div className="flex flex-col gap-4">
-          <ToggleSwitch
+          <SwitchWrapper
             checked={darkMode}
             onChange={setDarkMode}
             disabled={true}
@@ -628,22 +616,22 @@ function SettingsTab() {
         </h3>
 
         <div className="flex flex-col gap-4">
-          <ToggleSwitch
+          <SwitchWrapper
             checked={billReminder}
             onChange={setBillReminder}
             label="Lembrete de vencimento de contas"
           />
-          <ToggleSwitch
+          <SwitchWrapper
             checked={cardLimitAlert}
             onChange={setCardLimitAlert}
             label="Alerta de aproximação do limite de cartão"
           />
-          <ToggleSwitch
+          <SwitchWrapper
             checked={monthlySummary}
             onChange={setMonthlySummary}
             label="Resumo mensal por email"
           />
-          <ToggleSwitch
+          <SwitchWrapper
             checked={goalNotifications}
             onChange={setGoalNotifications}
             label="Notificações de novos objetivos alcançados"

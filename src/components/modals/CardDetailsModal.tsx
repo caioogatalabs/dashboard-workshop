@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useFinance } from '../../hooks/useFinance'
-import { ModalOverlay } from '../dashboard/ModalOverlay'
+import { ModalOverlay } from '../ui/ModalOverlay'
 import { CloseIcon } from '../dashboard/icons/CloseIcon'
 import { formatCurrency } from '../../utils/currency'
 import { CreditCard } from '../../types/creditCard'

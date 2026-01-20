@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useFinance } from '../../hooks/useFinance'
-import { ModalOverlay } from '../dashboard/ModalOverlay'
+import { ModalOverlay } from '../ui/ModalOverlay'
 import { CloseIcon } from '../dashboard/icons/CloseIcon'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { cn } from '@/lib/utils'
 
 interface AddMemberModalProps {
   isOpen: boolean
@@ -80,41 +84,44 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-300">
           <h2 className="text-2xl font-bold text-neutral-1000">Adicionar Membro da Família</h2>
-          <button
+          <Button
             onClick={onClose}
-            className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-neutral-100 transition-colors"
+            variant="ghost"
+            size="icon"
+            className="w-10 h-10 rounded-full"
             aria-label="Fechar"
           >
             <CloseIcon style={{ width: '20px', height: '20px' }} />
-          </button>
+          </Button>
         </div>
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-neutral-1000 mb-2">
+            <Label className="block text-sm font-medium text-neutral-1000 mb-2">
               Nome Completo *
-            </label>
-            <input
+            </Label>
+            <Input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ex: João Silva"
-              className={`w-full px-4 py-3 rounded-lg border bg-neutral-0 text-neutral-1000 ${
+              className={cn(
+                "w-full px-4 py-3 rounded-lg bg-neutral-0 text-neutral-1000",
                 errors.name ? 'border-red-500' : 'border-neutral-300'
-              }`}
+              )}
             />
             {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
           </div>
 
           {/* Role */}
           <div className="relative">
-            <label className="block text-sm font-medium text-neutral-1000 mb-2">
+            <Label className="block text-sm font-medium text-neutral-1000 mb-2">
               Função na Família *
-            </label>
+            </Label>
             <div className="relative">
-              <input
+              <Input
                 type="text"
                 value={role}
                 onChange={(e) => {
@@ -123,23 +130,25 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
                 }}
                 onFocus={() => setShowRoleSuggestions(true)}
                 placeholder="Ex: Pai, Mãe, Filho, Avô..."
-                className={`w-full px-4 py-3 rounded-lg border bg-neutral-0 text-neutral-1000 ${
+                className={cn(
+                  "w-full px-4 py-3 rounded-lg bg-neutral-0 text-neutral-1000",
                   errors.role ? 'border-red-500' : 'border-neutral-300'
-                }`}
+                )}
               />
               {showRoleSuggestions && role.length === 0 && (
                 <div className="absolute z-10 w-full mt-1 bg-neutral-0 border border-neutral-300 rounded-lg shadow-lg">
                   {ROLE_SUGGESTIONS.map((suggestion) => (
-                    <button
+                    <Button
                       key={suggestion}
+                      variant="ghost"
                       onClick={() => {
                         setRole(suggestion)
                         setShowRoleSuggestions(false)
                       }}
-                      className="w-full text-left px-4 py-2 hover:bg-neutral-100 first:rounded-t-lg last:rounded-b-lg"
+                      className="w-full text-left px-4 py-2 hover:bg-neutral-100 first:rounded-t-lg last:rounded-b-lg justify-start"
                     >
                       {suggestion}
-                    </button>
+                    </Button>
                   ))}
                 </div>
               )}
@@ -154,29 +163,33 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
             </label>
             <div className="space-y-3">
               <div className="flex gap-2 border-b border-neutral-300">
-                <button
+                <Button
+                  variant="ghost"
                   onClick={() => setAvatarType('url')}
-                  className={`px-4 py-2 font-medium ${
+                  className={cn(
+                    "px-4 py-2 font-medium rounded-none",
                     avatarType === 'url'
                       ? 'text-neutral-1000 border-b-2 border-neutral-1000'
                       : 'text-neutral-600'
-                  }`}
+                  )}
                 >
                   URL
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="ghost"
                   onClick={() => setAvatarType('upload')}
-                  className={`px-4 py-2 font-medium ${
+                  className={cn(
+                    "px-4 py-2 font-medium rounded-none",
                     avatarType === 'upload'
                       ? 'text-neutral-1000 border-b-2 border-neutral-1000'
                       : 'text-neutral-600'
-                  }`}
+                  )}
                 >
                   Upload
-                </button>
+                </Button>
               </div>
               {avatarType === 'url' ? (
-                <input
+                <Input
                   type="url"
                   value={avatarUrl}
                   onChange={(e) => setAvatarUrl(e.target.value)}
@@ -199,12 +212,18 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
                       }
                     }}
                   />
-                  <label
-                    htmlFor="avatar-upload"
-                    className="inline-block px-4 py-2 rounded-lg bg-neutral-1000 text-neutral-0 cursor-pointer hover:bg-neutral-900"
+                  <Button
+                    asChild
+                    variant="default"
+                    className="bg-neutral-1000 text-neutral-0 hover:bg-neutral-900"
                   >
-                    Selecionar arquivo
-                  </label>
+                    <label
+                      htmlFor="avatar-upload"
+                      className="inline-block px-4 py-2 rounded-lg cursor-pointer"
+                    >
+                      Selecionar arquivo
+                    </label>
+                  </Button>
                   <p className="text-xs text-neutral-500 mt-2">JPG, PNG (máx. 5MB)</p>
                 </div>
               )}
@@ -217,8 +236,8 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
               Renda Mensal Estimada (opcional)
             </label>
             <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-600">R$</span>
-              <input
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-600 z-10">R$</span>
+              <Input
                 type="text"
                 value={monthlyIncome ? `R$ ${monthlyIncome}` : ''}
                 onChange={handleIncomeChange}
@@ -231,18 +250,19 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
 
         {/* Footer */}
         <div className="flex items-center justify-end gap-4 px-6 py-4 border-t border-neutral-300 bg-neutral-0">
-          <button
+          <Button
             onClick={onClose}
-            className="px-6 py-3 rounded-full border border-neutral-300 bg-transparent text-neutral-600 hover:bg-neutral-100 transition-colors"
+            variant="outline"
+            className="px-6 py-3 rounded-full border-neutral-300"
           >
             Cancelar
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={handleSubmit}
-            className="px-6 py-3 rounded-full bg-neutral-1000 text-neutral-0 font-medium hover:bg-neutral-900 transition-colors"
+            className="px-6 py-3 rounded-full bg-neutral-1000 text-neutral-0 font-medium hover:bg-neutral-900"
           >
             Adicionar Membro
-          </button>
+          </Button>
         </div>
       </div>
     </ModalOverlay>

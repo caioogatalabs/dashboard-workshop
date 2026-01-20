@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { useFinance } from '../../hooks/useFinance'
-import { ModalOverlay } from './ModalOverlay'
+import { ModalOverlay } from '../ui/ModalOverlay'
 
 interface FilterPopoverProps {
   isOpen: boolean
